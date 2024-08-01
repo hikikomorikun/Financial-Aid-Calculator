@@ -1,6 +1,5 @@
 document.getElementById('householdIncome').addEventListener('input', updatePCI);
 document.getElementById('householdMembers').addEventListener('input', updatePCI);
-document.getElementById('selectAll').addEventListener('change', toggleAllCheckboxes);
 
 // Dynamically update the value of #pciValue when household income and household members are filled
 function updatePCI() {
@@ -17,16 +16,6 @@ function updatePCI() {
     
     const pci = income / householdMembers;
     document.getElementById('pciValue').innerText = pci.toFixed(2); // Display PCI with two decimal places
-}
-
-// Toggle all universities checkboxes to be checked and unchecked
-function toggleAllCheckboxes() {
-    const checkboxes = document.querySelectorAll('input[name="universities"]:not(#selectAll)');
-    const selectAll = document.getElementById('selectAll').checked;
-
-    checkboxes.forEach(checkbox => {
-        checkbox.checked = selectAll;
-    });
 }
 
 const universityAidInfo = {
@@ -71,7 +60,6 @@ document.getElementById('submit').addEventListener("click", function (e) {
     const housingType = document.getElementById('housingType').value;
     const income = parseFloat(document.getElementById('householdIncome').value);
     const householdMembers = parseInt(document.getElementById('householdMembers').value);
-    const universities = Array.from(document.querySelectorAll('input[name="universities"]:checked')).map(el => el.value);
 
     if (isNaN(income) || isNaN(householdMembers) || householdMembers <= 0) {
         document.getElementById('results').innerHTML = '<p>Please enter valid values for Gross Household Income and Number of Household Members.</p>';
@@ -85,14 +73,12 @@ document.getElementById('submit').addEventListener("click", function (e) {
     
     if(isEligible){
         results += `<p>Eligible for the following Uni Access below.</p>`;
-        universities.forEach(university => {
-            const aidInfo = universityAidInfo[university];
-            if (aidInfo) {
-                results += `<p><br>${aidInfo.name}<br>${aidInfo.scheme}<br>${aidInfo.coverage}<br></p>`;
-            }
-        });
-    } else {
-        results += `<p>Not eligible for Uni Access. Here are some other useful resources for your reference.<br><a href="#">Link 1</a><br><a href="#">Link 2</a><br><a href="#">Link 3</a></p>`;
+        for (let key in universityAidInfo) {
+            const aidInfo = universityAidInfo[key];
+            results += `<p><br>${aidInfo.name}<br>${aidInfo.scheme}<br>${aidInfo.coverage}<br></p>`;
+    }}
+    else {
+        results += `<p>Not eligible for Uni Access. Here are some other useful resources for your reference.<br><br><a href="#">Link 1</a><br><a href="#">Link 2</a><br><a href="#">Link 3</a></p>`;
     }
 
     document.getElementById('results').innerHTML = results;
