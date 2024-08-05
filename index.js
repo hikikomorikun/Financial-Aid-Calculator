@@ -22,32 +22,38 @@ const universityAidInfo = {
     "SMU": {
         name: "Singapore Management University (SMU)",
         scheme: "SMU Access",
+        coverage: "100% coverage",
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat') && pci <= 750;
                 },
                 eligibleText: "Eligible for SMU Access.",
-                resultDiv: "result-smu"
+                resultDiv: "result-smu",
+                wrapperDiv: "wrapper-smu"
             }
         ],
         ineligibleText: "Not eligible for SMU Access.",
-        resultDiv: "result-smu"
+        resultDiv: "result-smu",
+        wrapperDiv: "wrapper-smu"
     },
     "SUTD": {
         name: "Singapore University of Technology and Design (SUTD)",
         scheme: "SUTD Education Opportunity Grant",
+        coverage: "100% coverage",
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
                 eligibleText: "Eligible for SUTD Education Opportunity Grant.",
-                resultDiv: "result-sutd"
+                resultDiv: "result-sutd",
+                wrapperDiv: "wrapper-sutd"
             }
         ],
         ineligibleText: "Not eligible for SUTD Education Opportunity Grant.",
-        resultDiv: "result-sutd"
+        resultDiv: "result-sutd",
+        wrapperDiv: "wrapper-sutd"
     },
     "NUS": {
         name: "National University of Singapore (NUS)",
@@ -65,11 +71,13 @@ const universityAidInfo = {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && (750 <= pci <= 1100);
                 },
                 eligibleText: "100% tuition fee coverage",
-                resultDiv: "result-nus"
+                resultDiv: "result-nus",
+                wrapperDiv: "wrapper-nus"
             }
         ],
         ineligibleText: "Not eligible for NUS Enhanced Financial Scheme.",
-        resultDiv: "result-nus"
+        resultDiv: "result-nus",
+        wrapperDiv: "wrapper-nus"
     },
     "SUSS": {
         name: "Singapore University of Social Sciences (SUSS)",
@@ -81,11 +89,13 @@ const universityAidInfo = {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
                 eligibleText: "Eligible for SUSS Access Initiative.",
-                resultDiv: "result-suss"
+                resultDiv: "result-suss",
+                wrapperDiv: "wrapper-suss"
             }
         ],
         ineligibleText: "Not eligible for SUSS Access Initiative.",
-        resultDiv: "result-suss"
+        resultDiv: "result-suss",
+        wrapperDiv: "wrapper-suss"
     },
     "SIT": {
         name: "Singapore Institute of Technology (SIT)",
@@ -97,11 +107,13 @@ const universityAidInfo = {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
                 eligibleText: "Eligible for SIT Forward SITizen Initiative.",
-                resultDiv: "result-sit"
+                resultDiv: "result-sit",
+                wrapperDiv: "wrapper-sit"
             }
         ],
         ineligibleText: "Not eligible for SIT Forward SITizen Initiative.",
-        resultDiv: "result-sit"
+        resultDiv: "result-sit",
+        wrapperDiv: "wrapper-sit"
     },
     "NTU": {
         name: "Nanyang Technological University (NTU)",
@@ -113,18 +125,21 @@ const universityAidInfo = {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
                 eligibleText: "Eligible for NTU Enhanced Financial Aid Scheme. Criteria 1",
-                resultDiv: "result-ntu"
+                resultDiv: "result-ntu",
+                wrapperDiv: "wrapper-ntu"
             },
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && (750 <= pci <= 1100);
                 },
                 eligibleText: "Eligible for NTU Enhanced Financial Aid Scheme. Criteria 2",
-                resultDiv: "result-ntu"
+                resultDiv: "result-ntu",
+                wrapperDiv: "wrapper-ntu"
             }
         ],
         ineligibleText: "Not eligible for SMU Access.",
-        resultDiv: "result-ntu"
+        resultDiv: "result-ntu",
+        wrapperDiv: "wrapper-ntu"
     }
     // Add more universities as needed
 };
@@ -151,6 +166,7 @@ document.getElementById('submit').addEventListener("click", function (e) {
         const aidInfo = universityAidInfo[key];
         let eligible = false;
         let eligibilityResult = '';
+
         for (let criterion of aidInfo.criteria) {
             if (criterion.check(citizenship, housingType, pci)) {
                 eligibilityResult= `<p>${aidInfo.name}<br>${aidInfo.scheme}<br>${aidInfo.coverage}<br>${criterion.eligibleText}</p><br><br>`;
@@ -159,17 +175,30 @@ document.getElementById('submit').addEventListener("click", function (e) {
                 break;
             }
         }
+
         if (!eligible) {
             eligibilityResult = `<p>${aidInfo.name}<br>${aidInfo.scheme}<br>${aidInfo.ineligibleText}</p><br><br>`;
         }
 
-        document.getElementById(aidInfo.resultDiv).innerHTML = eligibilityResult;
+        const resultDiv = document.getElementById(aidInfo.resultDiv);
+        const wrapper = document.getElementById(aidInfo.wrapperDiv);
+        resultDiv.innerHTML = eligibilityResult;
+
+        if (eligible) {
+            wrapper.classList.remove('hidden');
+        } else {
+            wrapper.classList.add('hidden');
+        }
     }
 
     if (hasEligibleUniversity) {
         mainEligibilityResult += `<p>Congratulations! You're eligible for the following financial aid packages, including the Quantedge Foundation award (only if all criteria is met), at the respective autonomous universities:</p>`;
+        document.getElementById('eligible').classList.remove('hidden');
+        document.getElementById('ineligible').classList.add('hidden');
     } else {
         mainEligibilityResult += `<p>You do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options at:</p>`;
+        document.getElementById('eligible').classList.add('hidden');
+        document.getElementById('ineligible').classList.remove('hidden');
     }
 
     document.getElementById('results').innerHTML = mainEligibilityResult;
