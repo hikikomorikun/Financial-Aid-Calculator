@@ -28,12 +28,12 @@ const universityAidInfo = {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat') && pci <= 750;
                 },
-                eligibleText: "Eligible for SMU Access.",
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.<br><br>You will also receive additional $2,000 financial support for living or out-of-pocket expenses.",
                 resultDiv: "result-smu",
                 wrapperDiv: "wrapper-smu"
             }
         ],
-        ineligibleText: "Not eligible for SMU Access.",
+        ineligibleText: "We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options <a href='https://admissions.smu.edu.sg/financial-matters/financial-aid' target='_blank'>here</a>.",
         resultDiv: "result-smu",
         wrapperDiv: "wrapper-smu"
     },
@@ -46,85 +46,85 @@ const universityAidInfo = {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
-                eligibleText: "Eligible for SUTD Education Opportunity Grant.",
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.<br><br>Compulsory Freshmore expenses will be fully covered.",
                 resultDiv: "result-sutd",
                 wrapperDiv: "wrapper-sutd"
             }
         ],
-        ineligibleText: "Not eligible for SUTD Education Opportunity Grant.",
+        ineligibleText: "We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options <a href='https://www.sutd.edu.sg/Admissions/Undergraduate/Financing-Your-Studies/Financial-Options-Financial-Aid/Financial-Aid' target='_blank'>here</a>.",
         resultDiv: "result-sutd",
         wrapperDiv: "wrapper-sutd"
     },
     "NUS": {
         name: "National University of Singapore (NUS)",
         scheme: "NUS Enhanced Financial Scheme",
-        coverage: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies. You will also receive additional $10,000 financial support (over 4 years) for on-campus stay and overseas exposure and additional $4,000 per annum of living expenses.",
+        coverage: "100% coverage",
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
-                eligibleText: "100% tuition fee coverage + additional benefits"
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.<br><br>You will also receive additional $10,000 financial support (over 4 years) for on-campus stay and overseas exposure, additional $4,000 per annum of living expenses."
             },
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && (750 <= pci <= 1100);
                 },
-                eligibleText: "100% tuition fee coverage",
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
                 resultDiv: "result-nus",
                 wrapperDiv: "wrapper-nus"
             }
         ],
-        ineligibleText: "Not eligible for NUS Enhanced Financial Scheme.",
+        ineligibleText: "We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options <a href='https://nus.edu.sg/oam/financial-aid/overview-eligibility' target='_blank'>here</a>.",
         resultDiv: "result-nus",
         wrapperDiv: "wrapper-nus"
     },
     "SUSS": {
         name: "Singapore University of Social Sciences (SUSS)",
         scheme: "Access Initiative",
-        coverage: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
+        coverage: "100% coverage",
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
-                eligibleText: "Eligible for SUSS Access Initiative.",
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
                 resultDiv: "result-suss",
                 wrapperDiv: "wrapper-suss"
             }
         ],
-        ineligibleText: "Not eligible for SUSS Access Initiative.",
+        ineligibleText: "We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options <a href='https://www.suss.edu.sg/full-time-undergraduate/admissions/financial-aid' target='_blank'>here</a>.",
         resultDiv: "result-suss",
         wrapperDiv: "wrapper-suss"
     },
     "SIT": {
         name: "Singapore Institute of Technology (SIT)",
         scheme: "SIT Forward SITizen Initiative",
-        coverage: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
+        coverage: "100% coverage",
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
-                eligibleText: "Eligible for SIT Forward SITizen Initiative.",
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
                 resultDiv: "result-sit",
                 wrapperDiv: "wrapper-sit"
             }
         ],
-        ineligibleText: "Not eligible for SIT Forward SITizen Initiative.",
+        ineligibleText: "We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options <a href='https://www.singaporetech.edu.sg/admissions/financial-aid' target='_blank'>here</a>.",
         resultDiv: "result-sit",
         wrapperDiv: "wrapper-sit"
     },
     "NTU": {
         name: "Nanyang Technological University (NTU)",
         scheme: "NTU Enhanced Financial Aid Scheme",
-        coverage: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
+        coverage: "100% coverage",
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
                 },
-                eligibleText: "Eligible for NTU Enhanced Financial Aid Scheme. Criteria 1",
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
                 resultDiv: "result-ntu",
                 wrapperDiv: "wrapper-ntu"
             },
@@ -132,12 +132,12 @@ const universityAidInfo = {
                 check: function(citizenship, housingType, pci) {
                     return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && (750 <= pci <= 1100);
                 },
-                eligibleText: "Eligible for NTU Enhanced Financial Aid Scheme. Criteria 2",
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
                 resultDiv: "result-ntu",
                 wrapperDiv: "wrapper-ntu"
             }
         ],
-        ineligibleText: "Not eligible for SMU Access.",
+        ineligibleText: "We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options <a href='https://www.ntu.edu.sg/admissions/undergraduate/financial-matters/financial-aid/bursaries' target='_blank'>here</a>.",
         resultDiv: "result-ntu",
         wrapperDiv: "wrapper-ntu"
     }
@@ -147,6 +147,9 @@ const universityAidInfo = {
 // Main form action to calculate and generate eligible results based on selectons
 document.getElementById('submit').addEventListener("click", function (e) {
     e.preventDefault();
+
+    // Hide the specified div
+    document.getElementById('hideOnSubmit').classList.add('hidden');
 
     const citizenship = document.getElementById('citizenship').value;
     const housingType = document.getElementById('housingType').value;
@@ -159,7 +162,6 @@ document.getElementById('submit').addEventListener("click", function (e) {
     }
 
     const pci = income / householdMembers;
-    let mainEligibilityResult = `<p>Gross Monthly Household Per Capita Income (PCI): $${pci.toFixed(2)}</p>`;
     let hasEligibleUniversity = false;
 
     for (let key in universityAidInfo) {
@@ -169,7 +171,7 @@ document.getElementById('submit').addEventListener("click", function (e) {
 
         for (let criterion of aidInfo.criteria) {
             if (criterion.check(citizenship, housingType, pci)) {
-                eligibilityResult= `<p>${aidInfo.name}<br>${aidInfo.scheme}<br>${aidInfo.coverage}<br>${criterion.eligibleText}</p><br><br>`;
+                eligibilityResult= `<p>${criterion.eligibleText}</p>`;
                 eligible = true;
                 hasEligibleUniversity = true;
                 break;
@@ -177,30 +179,20 @@ document.getElementById('submit').addEventListener("click", function (e) {
         }
 
         if (!eligible) {
-            eligibilityResult = `<p>${aidInfo.name}<br>${aidInfo.scheme}<br>${aidInfo.ineligibleText}</p><br><br>`;
+            eligibilityResult = `<p>${aidInfo.ineligibleText}</p>`;
         }
 
         const resultDiv = document.getElementById(aidInfo.resultDiv);
         const wrapper = document.getElementById(aidInfo.wrapperDiv);
         resultDiv.innerHTML = eligibilityResult;
-
-        if (eligible) {
-            wrapper.classList.remove('hidden');
-        } else {
-            wrapper.classList.add('hidden');
-        }
+        wrapper.classList.remove('hidden');
     }
 
     if (hasEligibleUniversity) {
-        mainEligibilityResult += `<p>Congratulations! You're eligible for the following financial aid packages, including the Quantedge Foundation award (only if all criteria is met), at the respective autonomous universities:</p>`;
         document.getElementById('eligible').classList.remove('hidden');
         document.getElementById('ineligible').classList.add('hidden');
     } else {
-        mainEligibilityResult += `<p>You do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options at:</p>`;
         document.getElementById('eligible').classList.add('hidden');
         document.getElementById('ineligible').classList.remove('hidden');
     }
-
-    document.getElementById('results').innerHTML = mainEligibilityResult;
-
 });
