@@ -68,7 +68,7 @@ const universityAidInfo = {
             },
             {
                 check: function(citizenship, housingType, pci) {
-                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci > 750 && pci <= 1100;
+                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && (pci > 750 && pci <= 1100);
                 },
                 eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
                 resultDiv: "result-nus",
@@ -130,7 +130,7 @@ const universityAidInfo = {
             },
             {
                 check: function(citizenship, housingType, pci) {
-                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci > 750 && pci <= 1100;
+                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && (pci > 750 && pci <= 1100);
                 },
                 eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.",
                 resultDiv: "result-ntu",
