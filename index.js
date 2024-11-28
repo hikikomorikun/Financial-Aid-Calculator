@@ -216,36 +216,20 @@ document.getElementById('submit').addEventListener("click", function (e) {
     }
 
     const resultsDiv = document.getElementById('results');
-    const eligibleDiv = document.getElementById('eligible');
-    const ineligibleDiv = document.getElementById('ineligible');
 
-    if (eligibleUniversities.length === 0) {
-        eligibleDiv.classList.add('hidden');
-        ineligibleDiv.classList.remove('hidden');
+    if (eligibleUniversities.length > 0) {
+        const eligibleMessage = `
+            <p>You are eligible for the following universities under the University Access initiative:</p>
+            <ul>${eligibleUniversities.map(name => `<li>${name}</li>`).join('')}</ul>
+        `;
+        resultsDiv.innerHTML = eligibleMessage;
+    }
 
+    if (ineligibleUniversities.length > 0) {
         const ineligibleMessage = `
-        <p>We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options at these universities:</p>
-        <p>
-            ${ineligibleUniversities.map(u => `<a href="${u.link}" target="_blank" class="ineligible-link">${u.name}</a>`).join('')}
-        </p>
-    `;
-        resultsDiv.innerHTML = ineligibleMessage;
-    } else {
-        eligibleDiv.classList.remove('hidden');
-        ineligibleDiv.classList.remove('hidden');
-
-        const filteredIneligibleUniversities = ineligibleUniversities.filter(
-            u => !eligibleUniversities.includes(u.name)
-        );
-
-        if (filteredIneligibleUniversities.length > 0) {
-            const ineligibleMessage = `
-                <p>We are sorry that you do not meet the eligibility criteria for the University Access initiative. However, you may still be eligible for other financial aid options at these universities:</p>
-                <p>${filteredIneligibleUniversities.map(u => `<a href="${u.link}" target="_blank" class="ineligible-link">${u.name}</a>`).join('<br>')}</p>
-            `;
-            resultsDiv.innerHTML = ineligibleMessage;
-        } else {
-            ineligibleDiv.classList.add('hidden');
-        }
+            <p>We are sorry that you do not meet the eligibility criteria for some universities. However, you may still be eligible for other financial aid options at these universities:</p>
+            <p>${ineligibleUniversities.map(u => `<a href="${u.link}" target="_blank" class="ineligible-link">${u.name}</a>`).join('<br>')}</p>
+        `;
+        resultsDiv.innerHTML += ineligibleMessage; // Append the ineligible message after the eligible universities
     }
 });
