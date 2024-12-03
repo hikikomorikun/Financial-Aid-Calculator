@@ -32,16 +32,16 @@ function updatePCI() {
 const universityAidInfo = {
     "SMU": {
         name: "Singapore Management University (SMU)",
-        scheme: "SMU Access",
+        scheme: "SMU Access Plus",
         coverage: "100% coverage",
         resultDiv: "result-smu",
         wrapperDiv: "wrapper-smu",
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
-                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat') && pci <= 750;
+                    return citizenship === 'Singapore Citizen' && pci <= 1100;
                 },
-                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.<br><br>You will also receive additional $2,000 financial support for living or out-of-pocket expenses."
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.<br><br>You will also receive an additional $4,000 Global Experience Grant (over 4 years) for global exposure, and an addition $4,000 per annum of living expenses."
             }
         ],
         ineligibleText: "<a href='https://admissions.smu.edu.sg/financial-matters/financial-aid' target='_blank'>Singapore Management University (SMU)",
@@ -71,13 +71,13 @@ const universityAidInfo = {
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
-                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
+                    return citizenship === 'Singapore Citizen' && pci <= 750;
                 },
-                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.<br><br>You will also receive additional $10,000 financial support (over 4 years) for on-campus stay and overseas exposure, additional $4,000 per annum of living expenses."
+                eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies.<br><br>You will also receive additional $10,000 Opportunity Enhancement Grant (over 4 years) for on-campus stay and overseas exposure, and an additional $4,000 per annum of living expenses."
             },
             {
                 check: function(citizenship, housingType, pci) {
-                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && (pci > 750 && pci <= 1100);
+                    return citizenship === 'Singapore Citizen' && (pci > 750 && pci <= 1100);
                 },
                 eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies."
             }
@@ -125,7 +125,7 @@ const universityAidInfo = {
         criteria: [
             {
                 check: function(citizenship, housingType, pci) {
-                    return citizenship === 'Singapore Citizen' && (housingType === 'HDB 1 or 2 room flat' || housingType === 'HDB 3-room flat' || housingType === 'HDB 4-room flat') && pci <= 750;
+                    return citizenship === 'Singapore Citizen' && pci <= 750;
                 },
                 eligibleText: "100% tuition fee coverage after taking into account all scholarships, bursaries and Government tuition fee subsidies."
             },
@@ -167,25 +167,30 @@ document.getElementById('submit').addEventListener("click", function (e) {
     const income = parseFloat(document.getElementById('householdIncome').value);
     const householdMembers = parseInt(document.getElementById('householdMembers').value);
 
-    // Check for empty fields
-    if (!citizenship || !housingType || !income || !householdMembers) {
+    if (!citizenship || !housingType || isNaN(income) || isNaN(householdMembers)) {
         alert('Please fill in all required fields before submitting the form.');
         return;
     }
 
-    // Ensure income and householdMembers are valid numbers
-    const incomeValue = parseFloat(income);
-    const householdMembersValue = parseInt(householdMembers);
-
-    if (isNaN(incomeValue) || isNaN(householdMembersValue) || householdMembersValue <= 0) {
-        alert('Please enter valid values for Gross Household Income and Number of Household Members.');
+    if (householdMembers <= 0) {
+        alert('Number of household members must be greater than 0.');
         return;
     }
 
     const pci = income / householdMembers;
-    let eligibleUniversities = [];
-    let ineligibleUniversities = [];
+    const eligibleWrappers = [];
+    const ineligibleUniversities = [];
 
+    // Reset all wrappers to hidden and clear their result content
+    Object.values(universityAidInfo).forEach(aidInfo => {
+        const wrapper = document.getElementById(aidInfo.wrapperDiv);
+        const resultDiv = document.getElementById(aidInfo.resultDiv);
+
+        if (wrapper) wrapper.classList.add('hidden');
+        if (resultDiv) resultDiv.innerHTML = ''; // Clear result content
+    });
+
+    // Process each university
     for (let key in universityAidInfo) {
         const aidInfo = universityAidInfo[key];
         let eligible = false;
@@ -195,41 +200,63 @@ document.getElementById('submit').addEventListener("click", function (e) {
             if (criterion.check(citizenship, housingType, pci)) {
                 eligibilityResult = `<p>${criterion.eligibleText}</p>`;
                 eligible = true;
-                eligibleUniversities.push(aidInfo.name);
+                eligibleWrappers.push(aidInfo.wrapperDiv);
                 break;
             }
         }
 
-        if (!eligible) {
-            ineligibleUniversities.push({
-                name: aidInfo.name,
-                link: aidInfo.ineligibleText.match(/href='([^']+)'/)[1],
-            });
-        }
-
         const resultDiv = document.getElementById(aidInfo.resultDiv);
         const wrapper = document.getElementById(aidInfo.wrapperDiv);
+
         if (resultDiv && wrapper) {
-            resultDiv.innerHTML = eligible ? eligibilityResult : '';
-            wrapper.classList.toggle('hidden', !eligible);
+            if (eligible) {
+                resultDiv.innerHTML = eligibilityResult;
+                wrapper.classList.remove('hidden');
+            } else {
+                ineligibleUniversities.push({
+                    name: aidInfo.name,
+                    link: aidInfo.ineligibleText.match(/href='([^']+)'/)[1],
+                });
+            }
         }
     }
 
     const resultsDiv = document.getElementById('results');
 
-    if (eligibleUniversities.length > 0) {
-        const eligibleMessage = `
-            <p>You are eligible for the following universities under the University Access initiative:</p>
-            <ul>${eligibleUniversities.map(name => `<li>${name}</li>`).join('')}</ul>
-        `;
-        resultsDiv.innerHTML = eligibleMessage;
-    }
+// Handle the eligible header visibility
+const eligibleHeader = document.getElementById('eligible-header');
+if (eligibleWrappers.length > 0) {
+    eligibleHeader.classList.remove('hidden'); // Show the eligible header
+} else {
+    eligibleHeader.classList.add('hidden'); // Hide the eligible header if no universities
+}
 
-    if (ineligibleUniversities.length > 0) {
-        const ineligibleMessage = `
-            <p>We are sorry that you do not meet the eligibility criteria for some universities. However, you may still be eligible for other financial aid options at these universities:</p>
-            <p>${ineligibleUniversities.map(u => `<a href="${u.link}" target="_blank" class="ineligible-link">${u.name}</a>`).join('<br>')}</p>
-        `;
-        resultsDiv.innerHTML += ineligibleMessage; // Append the ineligible message after the eligible universities
-    }
+    // Remove hidden class from eligible wrappers while maintaining order
+    eligibleWrappers.forEach(wrapperId => {
+        const wrapper = document.getElementById(wrapperId);
+        if (wrapper) wrapper.classList.remove('hidden');
+    });
+
+// Sort ineligible universities alphabetically by name
+if (ineligibleUniversities.length > 0) {
+    ineligibleUniversities.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+// Build the ineligible universities message
+const ineligibleMessage = ineligibleUniversities.length > 0
+    ? `
+    <div id="ineligible">
+        <p>While you do not meet the eligibility criteria at the following universities, you may still be eligible for other financial aid options at these universities:</p>
+        <p>${ineligibleUniversities.map(u => `<a href="${u.link}" target="_blank" class="ineligible-link">${u.name}</a>`).join('<br>')}</p>
+    </div>
+    `
+    : '';
+
+// Append the ineligible message after all eligible wrappers
+const existingIneligible = document.getElementById('ineligible');
+if (existingIneligible) existingIneligible.remove(); // Remove any previously appended ineligible message
+
+if (ineligibleUniversities.length > 0) {
+    resultsDiv.insertAdjacentHTML('beforeend', ineligibleMessage);
+}
 });
